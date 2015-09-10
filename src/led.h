@@ -9,4 +9,6 @@ void ledOff();
 
 void flashLED(unsigned int millis);
 
+void flashWordLED(unsigned int word);
+
 #endif

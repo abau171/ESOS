@@ -16,6 +16,19 @@ void ledOff() {
 
 void flashLED(unsigned int millis) {
 	ledOn();
-	spinMilli(100);
+	spinMilli(millis);
 	ledOff();
+}
+
+void flashWordLED(unsigned int word) {
+	unsigned int mask = 0x80000000;
+	do {
+		if ((word & mask) > 0) {
+			flashLED(1000);
+		} else {
+			flashLED(100);
+		}
+		spinMilli(500);
+		mask >>= 1;
+	} while (mask > 0);
 }

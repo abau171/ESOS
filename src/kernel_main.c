@@ -1,8 +1,10 @@
 #include "gpio.h"
 #include "timer.h"
 #include "led.h"
+#include "gpu_framebuffer.h"
 
 void kernel_main() {
+	initFrameBuffer(1920, 1080, 16);
 }
 
 void kernel_hangLoop() {

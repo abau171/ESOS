@@ -1,4 +1,5 @@
 #include "gpu_postman.h"
+#include "led.h"
 
 #define GPU_MAILBOX_DEVICE_ADDRESS ((struct GPUMailbox*) 0x2000B880)
 
@@ -35,7 +36,7 @@ unsigned int gpuRead(unsigned int channel) {
 	unsigned int readWord;
 	do {
 		while (gpuMailbox->status & 0x40000000);
-		unsigned int readWord = gpuMailbox->read;
+		readWord = gpuMailbox->read;
 	} while ((readWord & 0xf) != channel);
 	return (readWord & 0xfffffff0);
 }
