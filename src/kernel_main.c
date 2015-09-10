@@ -1,21 +1,16 @@
 #include "gpio.h"
 #include "timer.h"
+#include "led.h"
 
 void kernel_main() {
 }
 
-void flashLED(unsigned int millis) {
-	setGPIO(47, GPIO_PIN_ON);
-	spinMilli(100);
-	setGPIO(47, GPIO_PIN_OFF);
-}
-
 void kernel_hangLoop() {
-	setGPIOFunction(47, 1);
+	ledEnable();
 	while (1) {
-		flashLED(100);
+		flashLED(50);
 		spinMilli(100);
-		flashLED(100);
-		spinMilli(700);
+		flashLED(50);
+		spinMilli(800);
 	}
 }
