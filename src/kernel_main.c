@@ -3,6 +3,8 @@
 #include "led.h"
 #include "gpu_framebuffer.h"
 
+void printChar(unsigned int x, unsigned int y, char c);
+
 void kernel_main() {
 	unsigned int width = 1920;
 	unsigned int height = 1080;
@@ -13,10 +15,14 @@ void kernel_main() {
 	for (int y = 0; y < vheight; y++) {
 		for (int x = 0; x < vwidth; x++) {
 			if ((x + y) % 2 == 0) {
-				setPixel4x4(x, y, 0xffff);
+				setPixel4x4(x, y, 0x8000);
 			}
 		}
 	}
+
+	printChar(0, 0, 'A');
+	printChar(1, 0, 'B');
+	printChar(2, 0, '?');
 }
 
 void kernel_hangLoop() {
