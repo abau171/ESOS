@@ -4,7 +4,19 @@
 #include "gpu_framebuffer.h"
 
 void kernel_main() {
-	initFrameBuffer(1920, 1080, 16);
+	unsigned int width = 1920;
+	unsigned int height = 1080;
+	initFrameBuffer(width, height, 16);
+
+	unsigned int vwidth = width / 4;
+	unsigned int vheight = height / 4;
+	for (int y = 0; y < vheight; y++) {
+		for (int x = 0; x < vwidth; x++) {
+			if ((x + y) % 2 == 0) {
+				setPixel4x4(x, y, 0xffff);
+			}
+		}
+	}
 }
 
 void kernel_hangLoop() {
