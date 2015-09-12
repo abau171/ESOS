@@ -4,7 +4,10 @@
 extern char font[];
 
 void printChar(unsigned int x, unsigned int y, char c) {
-	c -= 65;
+	if (x >= getFrameBufferWidth() || y >= getFrameBufferHeight()) {
+		return;
+	}
+	c -= 32;
 	for (int subx = 0; subx < 6; subx++) {
 		for (int suby = 0; suby < 6; suby++) {
 			char row = font[6 * c + suby];

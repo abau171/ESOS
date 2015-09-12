@@ -11,6 +11,11 @@ void kernel_main() {
 	initFrameBuffer(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_BIT_DEPTH);
 	printStr(0, 0, "ESOS");
 	printStr(0, 1, "EVENTUALLY SENTIENT OPERATING SYSTEM");
+	printStr(0, 3, " !\"#$%&'()*+,-./");
+	printStr(0, 4, "0123456789");
+	printStr(0, 5, ":;<=>?@");
+	printStr(0, 6, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	printStr(0, 7, "[\\]^_`");
 }
 
 void kernel_hangLoop() {

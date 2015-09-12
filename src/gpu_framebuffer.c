@@ -31,7 +31,18 @@ void initFrameBuffer(unsigned int width, unsigned int height, unsigned int bitDe
 	// nothing done with result yet, but if it is not 0 then an error has occurred
 }
 
+unsigned int getFrameBufferWidth() {
+	return frameBufferInfo.virtualWidth;
+}
+
+unsigned int getFrameBufferHeight() {
+	return frameBufferInfo.virtualWidth;
+}
+
 void setPixel(unsigned int x, unsigned int y, unsigned short color) {
+	if (x >= getFrameBufferWidth() || y >= getFrameBufferHeight()) {
+		return;
+	}
 	unsigned int offset = 2 * (y * frameBufferInfo.virtualWidth + x);
 	*((unsigned short*) (frameBufferInfo.gpuPointer + offset)) = color;
 }
