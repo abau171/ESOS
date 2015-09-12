@@ -1,6 +1,6 @@
-#include "led.h"
-#include "timer.h"
-#include "gpio.h"
+#include <led.h>
+#include <timer.h>
+#include <gpio.h>
 
 void ledEnable() {
 	setGPIOFunction(47, 1);

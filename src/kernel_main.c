@@ -1,7 +1,7 @@
-#include "timer.h"
-#include "led.h"
-#include "gpu_framebuffer.h"
-#include "print_char.h"
+#include <timer.h>
+#include <led.h>
+#include <gpu_framebuffer.h>
+#include <print.h>
 
 #define DISPLAY_WIDTH 480
 #define DISPLAY_HEIGHT 270

@@ -6,6 +6,7 @@ OBJCOPY = $(PREFIX)objcopy
 
 SRC = src
 OBJ = obj
+INCLUDE = include
 
 TARGET = kernel.img
 ELF_TARGET = kernel.elf
@@ -26,10 +27,10 @@ $(ELF_TARGET): $(ALL_OBJECTS)
 	$(LD) -T $(LINKER_SCRIPT) $(ALL_OBJECTS) -o $(ELF_TARGET)
 
 $(OBJ)/%.o: $(SRC)/%.s $(OBJ)
-	$(AS) $< -I $(SRC) -o $@
+	$(AS) $< -I $(INCLUDE) -o $@
 
 $(OBJ)/%.o: $(SRC)/%.c $(OBJ)
-	$(CC) -c -O2 $< -o $@
+	$(CC) -I $(INCLUDE) -c -O2 $< -o $@
 
 $(OBJ):
 	mkdir $(OBJ)
