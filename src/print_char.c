@@ -1,3 +1,4 @@
+#include "print_char.h"
 #include "gpu_framebuffer.h"
 
 struct Character {

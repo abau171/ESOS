@@ -2,8 +2,7 @@
 #include "timer.h"
 #include "led.h"
 #include "gpu_framebuffer.h"
-
-void printChar(unsigned int x, unsigned int y, char c);
+#include "print_char.h"
 
 void kernel_main() {
 	unsigned int width = 1920;
