@@ -1,3 +1,4 @@
+.section .text.boot
 .globl _start
 _start:
 	mov sp, #0x00010000

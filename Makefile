@@ -26,7 +26,7 @@ $(ELF_TARGET): $(ALL_OBJECTS)
 	$(LD) -T $(LINKER_SCRIPT) $(ALL_OBJECTS) -o $(ELF_TARGET)
 
 $(OBJ)/%.o: $(SRC)/%.s $(OBJ)
-	$(AS) $< -o $@
+	$(AS) $< -I $(SRC) -o $@
 
 $(OBJ)/%.o: $(SRC)/%.c $(OBJ)
 	$(CC) -c -O2 $< -o $@

@@ -35,11 +35,3 @@ void setPixel(unsigned int x, unsigned int y, unsigned short color) {
 	unsigned int offset = 2 * (y * frameBufferInfo.virtualWidth + x);
 	*((unsigned short*) (frameBufferInfo.gpuPointer + offset)) = color;
 }
-
-void setPixel4x4(unsigned int x, unsigned int y, unsigned short color) {
-	for (int suby = 0; suby < 4; suby++) {
-		for (int subx = 0; subx < 4; subx++) {
-			setPixel(4 * x + subx, 4 * y + suby, color);
-		}
-	}
-}
