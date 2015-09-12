@@ -16,6 +16,13 @@ void kernel_main() {
 	printStr(0, 5, ":;<=>?@");
 	printStr(0, 6, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	printStr(0, 7, "[\\]^_`");
+	printUInt(0, 8, -1);
+	printInt(0, 9, 0);
+	printInt(0, 10, 2147483647);
+	printInt(0, 11, 2147483648);
+	while (1) {
+		printUInt(0, 12, getSystemTime());
+	}
 }
 
 void kernel_hangLoop() {

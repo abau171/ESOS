@@ -14,6 +14,8 @@ void printChar(unsigned int x, unsigned int y, char c) {
 			char mask = 0x80 >> subx;
 			if (row & mask) {
 				setPixel(6 * x + subx, 6 * y + suby, 0xffff);
+			} else {
+				setPixel(6 * x + subx, 6 * y + suby, 0x0000);
 			}
 		}
 	}
@@ -25,5 +27,33 @@ void printStr(unsigned int x, unsigned int y, char* str) {
 		char c = str[i];
 		printChar(x + i, y, c);
 		i++;
+	}
+}
+
+void printUInt(unsigned int x, unsigned int y, unsigned int i) {
+	unsigned int place = 0;
+	unsigned long j = i;
+	while (j > 9) {
+		j -= j % 10;
+		j /= 10;
+		place++;
+	}
+	do {
+		unsigned int ones = i % 10;
+		char onesChar = ones + 48;
+		printChar(x + place, y, onesChar);
+		i -= ones;
+		i /= 10;
+		place--;
+	} while (i > 0);
+}
+
+void printInt(unsigned int x, unsigned int y, int i) {
+	unsigned int isNegative = i < 0;
+	if (isNegative) {
+		printChar(x, y, '-');
+		printUInt(x + 1, y, -i);
+	} else {
+		printUInt(x, y, i);
 	}
 }
