@@ -12,9 +12,8 @@ _start:
 	ldr pc, interruptHandlerAddress
 	ldr pc, fastInterruptHandlerAddress
 	// the handler addresses are stored as constants.
-	// most handlers are wrapped to save the registers from
-	// the interrupted code, then restore them when the handler
-	// finishes.
+	// most handlers are wrapped by functions using gcc's interrupt
+	// attribute.
 	// this is probably inefficient, but simplifies the C code.
 	resetHandlerAddress:
 		// the reset handler isn't wrapped because by definition
@@ -37,7 +36,7 @@ _start:
 
 resetHandler:
 	// build the vector table
-	ldr r0, _start // first load the address of the start of the table
+	mov r0, #0x00008000 // first load the address of the start of the table
 	mov r1, #0x00000000 // then load the destination
 	ldmia r0!, {r2, r3, r4, r5, r6, r7, r8, r9} // move the branches into place
 	stmia r1!, {r2, r3, r4, r5, r6, r7, r8, r9}
@@ -52,35 +51,3 @@ resetHandler:
 	// otherwise, just hang while doing nothing at all
 	hang:
 		b hang
-
-undefinedInstructionHandlerWrapper:
-	push {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-	bl undefinedInstructionHandler
-	pop {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-softwareInterruptHandlerWrapper:
-	push {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-	bl softwareInterruptHandler
-	pop {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-prefetchAbortHandlerWrapper:
-	push {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-	bl prefetchAbortHandler
-	pop {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-dataAbortHandlerWrapper:
-	push {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-	bl dataAbortHandler
-	pop {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-interruptHandlerWrapper:
-	push {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-	bl interruptHandler
-	pop {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}
-fastInterruptHandlerWrapper:
-	push {r0, r1, r2, r3, r4, r5, r6, r7}
-	bl fastInterruptHandler
-	pop {r0, r1, r2, r3, r4, r5, r6, r7}
-
-undefinedInstructionHandler:
-softwareInterruptHandler:
-prefetchAbortHandler:
-dataAbortHandler:
-interruptHandler:
-fastInterruptHandler:
