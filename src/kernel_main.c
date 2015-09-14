@@ -24,7 +24,7 @@ void kernel_main() {
 	printInt(0, 10, 2147483647);
 	printInt(0, 11, 2147483648);
 
-	setTimerDuration(0x400);
+	setTimerDuration(0x010);
 	enableInterruptTimer();
 	enableInterrupts();
 
