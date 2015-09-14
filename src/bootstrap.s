@@ -34,6 +34,7 @@ _start:
 	fastInterruptHandlerAddress:
 		.word fastInterruptHandlerWrapper
 
+.section .text
 resetHandler:
 	// build the vector table
 	mov r0, #0x00008000 // first load the address of the start of the table
@@ -51,3 +52,10 @@ resetHandler:
 	// otherwise, just hang while doing nothing at all
 	hang:
 		b hang
+
+.globl enableInterrupts
+enableInterrupts:
+	mrs r0, cpsr
+	bic r0, r0, #0x80
+	msr cpsr_c, r0
+	mov pc, lr

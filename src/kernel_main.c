@@ -2,10 +2,13 @@
 #include <led.h>
 #include <gpu_framebuffer.h>
 #include <print.h>
+#include <interruptTimer.h>
 
 #define DISPLAY_WIDTH 480
 #define DISPLAY_HEIGHT 270
 #define DISPLAY_BIT_DEPTH 16
+
+void enableInterrupts();
 
 void kernel_main() {
 	initFrameBuffer(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_BIT_DEPTH);
@@ -20,6 +23,11 @@ void kernel_main() {
 	printInt(0, 9, 0);
 	printInt(0, 10, 2147483647);
 	printInt(0, 11, 2147483648);
+
+	setTimerDuration(0x400);
+	enableInterruptTimer();
+	enableInterrupts();
+
 	while (1) {
 		printUInt(0, 12, getSystemTime());
 	}
