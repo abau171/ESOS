@@ -10,6 +10,7 @@
 #define DISPLAY_BIT_DEPTH 16
 
 void kernel_main() {
+	spinMilli(1000); // GPU doesn't always work without warm up time?
 	initFrameBuffer(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_BIT_DEPTH);
 	printStr(0, 0, "ESOS");
 	printStr(0, 1, "EVENTUALLY SENTIENT OPERATING SYSTEM");
