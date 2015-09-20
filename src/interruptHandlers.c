@@ -1,6 +1,6 @@
-#include <interruptVectorTable.h>
+#include <interruptHandlers.h>
 #include <led.h>
-#include <interruptTimer.h>
+#include <timerInterrupt.h>
 #include <gpu_framebuffer.h>
 
 void undefinedInstructionHandler() {
@@ -35,7 +35,7 @@ void interruptHandler() {
 	}
 	color++;
 	setPixel(x, y, color);
-	clearInterrupt();
+	clearTimerInterrupt();
 }
 
 void fastInterruptHandler() {

@@ -1,5 +1,5 @@
-#ifndef INTERRUPT_VECTOR_TABLE_H
-#define INTERRUPT_VECTOR_TABLE_H
+#ifndef INTERRUPT_HANDLERS_H
+#define INTERRUPT_HANDLERS_H
 
 void undefinedInstructionHandler();
 

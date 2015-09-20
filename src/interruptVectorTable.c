@@ -1,4 +1,4 @@
-#include <interruptVectorTable.h>
+#include <interruptHandlers.h>
 
 void __attribute__((interrupt("UNDEF"))) undefinedInstructionHandlerWrapper() {
 	undefinedInstructionHandler();

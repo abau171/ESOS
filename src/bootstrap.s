@@ -59,3 +59,10 @@ enableInterrupts:
 	bic r0, r0, #0x80
 	msr cpsr_c, r0
 	mov pc, lr
+
+.globl disableInterrupts
+disableInterrupts:
+	mrs r0, cpsr
+	orr r0, r0, #0x80
+	msr cpsr_c, r0
+	mov pc, lr
