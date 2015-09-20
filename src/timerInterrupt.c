@@ -3,7 +3,9 @@
 #define INTERRUPT_TIMER_DEVICE_ADDRESS 0x2000B400
 
 #define ITIMER_32BIT (1 << 1)
-#define ITIMER_PRESCALE_256 (2 << 2)
+#define ITIMER_PRESCALE_1 (0x00 << 2)
+#define ITIMER_PRESCALE_16 (0x01 << 2)
+#define ITIMER_PRESCALE_256 (0x10 << 2)
 #define ITIMER_INT_ENABLE (1 << 5)
 #define ITIMER_ENABLE (1 << 7)
 
@@ -35,7 +37,7 @@ void enableTimer() {
 		ITIMER_32BIT |
 		ITIMER_ENABLE |
 		ITIMER_INT_ENABLE | 
-		ITIMER_PRESCALE_256;
+		ITIMER_PRESCALE_1;
 }
 
 void disableTimer() {
@@ -43,5 +45,5 @@ void disableTimer() {
 		ITIMER_32BIT |
 		0 |
 		ITIMER_INT_ENABLE | 
-		ITIMER_PRESCALE_256;
+		ITIMER_PRESCALE_1;
 }

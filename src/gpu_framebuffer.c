@@ -36,7 +36,7 @@ unsigned int getFrameBufferWidth() {
 }
 
 unsigned int getFrameBufferHeight() {
-	return frameBufferInfo.virtualWidth;
+	return frameBufferInfo.virtualHeight;
 }
 
 void setPixel(unsigned int x, unsigned int y, unsigned short color) {

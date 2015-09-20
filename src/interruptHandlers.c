@@ -2,6 +2,7 @@
 #include <led.h>
 #include <timerInterrupt.h>
 #include <gpu_framebuffer.h>
+#include <scheduler.h>
 
 void undefinedInstructionHandler() {
 
@@ -19,24 +20,10 @@ void dataAbortHandler() {
 
 }
 
-static unsigned int color = 0xfffe;
-static unsigned int x = 0;
-static unsigned int y = 0;
 void interruptHandler() {
 	disableTimer();
-	x++;
-	unsigned int fbHeight = getFrameBufferHeight();
-	if (x >= fbHeight) {
-		x = 0;
-		y++;
-	}
-	unsigned int fbWidth = getFrameBufferWidth();
-	if (y >= fbWidth) {
-		y = 0;
-	}
-	color++;
-	setPixel(x, y, color);
 	clearTimerInterrupt();
+	schedulerTimerFinish();
 }
 
 void fastInterruptHandler() {
