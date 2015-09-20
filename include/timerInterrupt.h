@@ -5,4 +5,8 @@ void setTimerInterruptDuration(unsigned int duration);
 
 void clearTimerInterrupt();
 
+void enableTimer();
+
+void disableTimer();
+
 #endif

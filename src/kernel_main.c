@@ -24,10 +24,10 @@ void kernel_main() {
 	printInt(0, 10, 2147483647);
 	printInt(0, 11, 2147483648);
 
-	spinMilli(5000);
-	setTimerInterruptDuration(0x010);
+	spinMilli(1000);
 	enableTimerInterrupt();
 	enableInterrupts();
+	setTimerInterruptDuration(0x010);
 
 	while (1) {
 		printUInt(0, 12, getSystemTime());

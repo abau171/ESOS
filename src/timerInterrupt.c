@@ -1,3 +1,5 @@
+#include <timerInterrupt.h>
+
 #define INTERRUPT_TIMER_DEVICE_ADDRESS 0x2000B400
 
 #define ITIMER_32BIT (1 << 1)
@@ -21,6 +23,14 @@ static struct InterruptTimer* interruptTimer = (struct InterruptTimer*) INTERRUP
 
 void setTimerInterruptDuration(unsigned int duration) {
 	interruptTimer->load = duration;
+	enableTimer();
+}
+
+void clearTimerInterrupt() {
+	interruptTimer->irqClear = 1;
+}
+
+void enableTimer() {
 	interruptTimer->control =
 		ITIMER_32BIT |
 		ITIMER_ENABLE |
@@ -28,6 +38,10 @@ void setTimerInterruptDuration(unsigned int duration) {
 		ITIMER_PRESCALE_256;
 }
 
-void clearTimerInterrupt() {
-	interruptTimer->irqClear = 1;
+void disableTimer() {
+	interruptTimer->control =
+		ITIMER_32BIT |
+		0 |
+		ITIMER_INT_ENABLE | 
+		ITIMER_PRESCALE_256;
 }

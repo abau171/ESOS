@@ -19,10 +19,11 @@ void dataAbortHandler() {
 
 }
 
-static unsigned int color = 0;
+static unsigned int color = 0xfffe;
 static unsigned int x = 0;
 static unsigned int y = 0;
 void interruptHandler() {
+	disableTimer();
 	x++;
 	unsigned int fbHeight = getFrameBufferHeight();
 	if (x >= fbHeight) {
