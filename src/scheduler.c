@@ -28,7 +28,11 @@ void task2_start() {
 }
 
 struct Task {
-	void (*start)();
+	uint32 r[13];
+	uint32 sp;
+	uint32 lr;
+	uint32 pc;
+	uint32 cpsr;
 };
 
 struct TaskQueueNode {
@@ -42,10 +46,27 @@ struct TaskQueueNode queueNode2;
 struct TaskQueueNode* queue;
 struct TaskQueueNode* queueEnd;
 
+void initTask(struct Task* task, void* sp, void (*start)()) {
+	for (int i = 0; i <= 12; i++) {
+		task->r[i] = 0;
+	}
+	task->sp = (uint32) sp;
+	task->lr = 0; // where to return?
+	task->pc = (uint32) start;
+	task->cpsr = 0x10 // USR mode
+		| 0x40 // F bit
+		| 0x80 // I bit
+		| 0x100; // A bit
+		// E bit is 0x200, not sure if set...
+}
+
+extern void* stack1;
+extern void* stack2;
+
 void initTaskQueue() {
-	queueNode1.task.start = &task1_start;
+	initTask(&(queueNode1.task), stack1, &task1_start);
 	queueNode1.next = &queueNode2;
-	queueNode2.task.start = &task2_start;
+	initTask(&(queueNode2.task), stack2, &task2_start);
 	queueNode2.next = NULL;
 	queue = &queueNode1;
 	queueEnd = &queueNode2;
@@ -62,17 +83,14 @@ struct Task* getCurrentTask() {
 	return &(queue->task);
 }
 
-void runCurrentTask() {
-	struct Task* currentTask = getCurrentTask();
-	(currentTask->start)();
-}
+void runTask(struct Task* task);
 
 void startScheduler() {
 	initTaskQueue();
-	runCurrentTask();
+	runTask(&(queue->task));
 }
 
 void runNextTask() {
 	rotateTaskQueue();
-	runCurrentTask();
+	runTask(&(queue->task));
 }
