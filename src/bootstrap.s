@@ -15,7 +15,7 @@ _start:
 	undefinedInstructionHandlerAddress:
 		.word 0x0
 	softwareInterruptHandlerAddress:
-		.word 0x0
+		.word softwareInterruptHandler
 	prefetchAbortHandlerAddress:
 		.word 0x0
 	dataAbortHandlerAddress:
@@ -25,7 +25,7 @@ _start:
 	interruptHandlerAddress:
 		.word 0x0
 	fastInterruptHandlerAddress:
-		.word fastInterruptHandler
+		.word 0x0
 
 .section .text
 resetHandler:
@@ -41,5 +41,13 @@ resetHandler:
 	hang:
 		b hang
 
-fastInterruptHandler:
+.globl yield
+yield:
+	swi #0x0
+	mov pc, lr
+
+softwareInterruptHandler:
+	mov sp, #0x8000
+	bl runNextTask
+	bl kernel_hangLoop
 	b hang

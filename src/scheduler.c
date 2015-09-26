@@ -4,20 +4,26 @@
 #include <scheduler.h>
 
 void task1_start() {
-	for (int i = 0; i < 2; i++) {
-		ledOn();
-		spinMilli(300);
-		ledOff();
-		spinMilli(300);
+	while (1) {
+		for (int i = 0; i < 2; i++) {
+			ledOn();
+			spinMilli(300);
+			ledOff();
+			spinMilli(200);
+		}
+		yield();
 	}
 }
 
 void task2_start() {
-	for (int i = 0; i < 3; i++) {
-		ledOn();
-		spinMilli(100);
-		ledOff();
-		spinMilli(100);
+	while (1) {
+		for (int i = 0; i < 3; i++) {
+			ledOn();
+			spinMilli(100);
+			ledOff();
+			spinMilli(200);
+		}
+		yield();
 	}
 }
 
@@ -56,11 +62,17 @@ struct Task* getCurrentTask() {
 	return &(queue->task);
 }
 
+void runCurrentTask() {
+	struct Task* currentTask = getCurrentTask();
+	(currentTask->start)();
+}
+
 void startScheduler() {
 	initTaskQueue();
-	while (1) {
-		struct Task* currentTask = getCurrentTask();
-		(currentTask->start)();
-		rotateTaskQueue();
-	}
+	runCurrentTask();
+}
+
+void runNextTask() {
+	rotateTaskQueue();
+	runCurrentTask();
 }
