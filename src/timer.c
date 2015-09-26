@@ -1,3 +1,5 @@
+#include <timer.h>
+
 #define TIMER_DEVICE_ADDRESS ((struct TimerDevice*) 0x20003000)
 
 struct TimerDevice {
@@ -22,6 +24,6 @@ void spinMilli(unsigned int waitMillis) {
 	spinMicro(waitMillis * 1000);
 }
 
-void spinSecond(unsigned int waitSeconds) {
+void spin(unsigned int waitSeconds) {
 	spinMicro(waitSeconds * 1000000);
 }

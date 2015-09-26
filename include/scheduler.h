@@ -3,6 +3,4 @@
 
 void startScheduler();
 
-void schedulerTimerFinish();
-
 #endif

@@ -1,15 +1,8 @@
 #include <timer.h>
 #include <led.h>
-#include <gpu_framebuffer.h>
-#include <print.h>
 #include <scheduler.h>
 
-#define DISPLAY_WIDTH 480
-#define DISPLAY_HEIGHT 270
-#define DISPLAY_BIT_DEPTH 16
-
 void kernel_main() {
-	initFrameBuffer(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_BIT_DEPTH);
 	startScheduler();
 }
 
