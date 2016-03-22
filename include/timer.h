@@ -1,13 +1,9 @@
 #ifndef TIMER_H
-#define TIMER_H
+#define TIME_H
 
-// microseconds
-unsigned int getSystemTime();
+#include <device_types.h>
 
-void spinMicro(unsigned int waitMicros);
-
-void spinMilli(unsigned int waitMillis);
-
-void spin(unsigned int waitSeconds);
+void timer_usleep(timer_address_t addr, unsigned int useconds);
 
 #endif
+

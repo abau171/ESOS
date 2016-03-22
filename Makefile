@@ -30,7 +30,7 @@ $(OBJ)/%.o: $(SRC)/%.s $(OBJ)
 	$(AS) $< -I $(INCLUDE) -o $@
 
 $(OBJ)/%.o: $(SRC)/%.c $(OBJ)
-	$(CC) -I $(INCLUDE) -c -nostdinc -nostdlib -ffreestanding -O2 $< -o $@
+	$(CC) -std=gnu99 -I $(INCLUDE) -c -nostdinc -nostdlib -ffreestanding -O2 $< -o $@
 
 $(OBJ):
 	mkdir $(OBJ)

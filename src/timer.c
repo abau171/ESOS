@@ -1,29 +1,9 @@
-#include <timer.h>
+#include <device_types.h>
 
-#define TIMER_DEVICE_ADDRESS ((struct TimerDevice*) 0x20003000)
-
-struct TimerDevice {
-	unsigned int status;
-	unsigned int counterLow;
-	unsigned int counterHigh;
-	unsigned int compare[4];
-};
-
-volatile struct TimerDevice* timerDevice = TIMER_DEVICE_ADDRESS;
-
-unsigned int getSystemTime() {
-	return timerDevice->counterLow;
+void timer_usleep(timer_address_t addr, unsigned int useconds) {
+	volatile unsigned int* timer = (unsigned int*) 0x101e2000;
+	*timer = useconds;
+	*(timer + 0x2) = 0x80 | 0x01 | 0x02;
+	while (*(timer + 0x1) > 0);
 }
 
-void spinMicro(unsigned int waitMicros) {
-	unsigned int endTime = getSystemTime() + waitMicros;
-	while (getSystemTime() < endTime);
-}
-
-void spinMilli(unsigned int waitMillis) {
-	spinMicro(waitMillis * 1000);
-}
-
-void spin(unsigned int waitSeconds) {
-	spinMicro(waitSeconds * 1000000);
-}
