@@ -8,17 +8,31 @@ task_t task1;
 task_t task2;
 
 void user1_f() {
-	uart_print(DEV_UART0, "user 1\n");
-	timer_usleep(DEV_TIMER0, 1000000);
-	uart_print(DEV_UART0, "user done, resetting...\n");
-	svc();
+	char a[] = {64, 0};
+	while (1) {
+		a[0]++;
+		if (a[0] > 90) a[0] = 65;
+		uart_print(DEV_UART0, a);
+		uart_cprint(DEV_UART0, '\n');
+		timer_usleep(DEV_TIMER0, 100000);
+		svc();
+	}
+}
+
+unsigned int u2_rec(unsigned int a) {
+	if (a == 0) return a + 1;
+	else return u2_rec(a - 1) + 1;
 }
 
 void user2_f() {
-	uart_print(DEV_UART0, "user 2\n");
-	timer_usleep(DEV_TIMER0, 1000000);
-	uart_print(DEV_UART0, "user done, resetting...\n");
-	svc();
+	unsigned int a = 0;
+	while (1) {
+		uart_dprint(DEV_UART0, u2_rec(a));
+		uart_cprint(DEV_UART0, '\n');
+		a++;
+		timer_usleep(DEV_TIMER0, 1000000);
+		svc();
+	}
 }
 
 void main() {
