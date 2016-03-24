@@ -31,24 +31,7 @@ reset_handler:
 	bl main
 	b _end
 
-software_interrupt_handler:
-	b _end
-
 _end:
 	wfi
 	b _end
 
-.globl activate
-activate:
-	ldmfd r0!, {ip,lr}
-	msr SPSR, ip
-	msr CPSR_c, #0xdf
-	mov sp, r0
-	pop {r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,fp,ip,lr}
-	msr CPSR_c, #0xd3
-	movs pc, lr
-
-.globl svc
-svc:
-	svc 0
-	mov pc, lr
