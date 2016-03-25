@@ -3,7 +3,7 @@
 
 #include <task.h>
 
-void activate(task_t* stack);
+void activate_task();
 
 void svc();
 
