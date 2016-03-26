@@ -16,7 +16,7 @@ software_interrupt_handler_address:    .word software_interrupt_handler
 prefetch_abort_handler_address:        .word 0x0
 data_abort_handler_address:            .word 0x0
 unused_handler_address:                .word 0x0
-interrupt_handler_address:             .word 0x0
+interrupt_handler_address:             .word interrupt_handler
 fast_interrupt_handler_address:        .word 0x0
 
 .section .text

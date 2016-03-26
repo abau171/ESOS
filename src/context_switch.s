@@ -1,10 +1,26 @@
 .globl software_interrupt_handler
 software_interrupt_handler:
+	/* TODO: make sure all interrupts are disabled in svc mode */
 	srsia #0x13
 	stmdb sp, {r0-lr}^
 	ldr sp, =0x07ffffff
 
 	bl handle_syscall
+
+	ldr r0, =cur_task
+	ldr sp, [r0]
+	add sp, sp, #60
+	ldmdb sp, {r0-lr}^
+	rfeia sp
+
+.globl interrupt_handler
+interrupt_handler:
+	srsia #0x13
+	msr CPSR_c, #0xd3
+	stmdb sp, {r0-lr}^
+	ldr sp, =0x07ffffff
+
+	bl handle_interrupt
 
 	ldr r0, =cur_task
 	ldr sp, [r0]
