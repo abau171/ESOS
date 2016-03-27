@@ -7,7 +7,11 @@ void uart_cprint(uart_address_t addr, char c);
 
 void uart_print(uart_address_t addr, char* string);
 
+void uart_bprint(uart_address_t addr, unsigned int a);
+
 void uart_dprint(uart_address_t addr, unsigned int a);
+
+void uart_xprint(uart_address_t addr, unsigned int a);
 
 #endif
 

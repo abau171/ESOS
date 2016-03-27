@@ -21,17 +21,17 @@ fast_interrupt_handler_address:        .word 0x0
 
 .section .text
 reset_handler:
+	/* copy the interrupt vector table from the load point to address 0 */
 	mov r0, #0x10000
 	mov r1, #0x0
 	ldmia r0!, {r2, r3, r4, r5, r6, r7, r8, r9}
 	stmia r1!, {r2, r3, r4, r5, r6, r7, r8, r9}
 	ldmia r0!, {r2, r3, r4, r5, r6, r7, r8, r9}
 	stmia r1!, {r2, r3, r4, r5, r6, r7, r8, r9}
+	/* set the stack address to the last available address */
 	ldr sp, =0x07ffffff
-	bl main
-	b _end
-
-_end:
-	wfi
-	b _end
+	/* run the kernel initializer */
+	bl kernel_init
+	/* activate the first task */
+	b activate_task
 
