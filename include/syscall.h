@@ -5,7 +5,9 @@
 
 void yield();
 
-void launch(start_func_t* start_func);
+unsigned int launch(start_func_t* start_func);
+
+unsigned int get_tid();
 
 #endif
 

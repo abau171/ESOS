@@ -4,6 +4,7 @@
 #include <task.h>
 
 extern task_t* cur_task;
+extern unsigned int cur_tid;
 
 void init_scheduler(void);
 

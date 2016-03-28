@@ -2,7 +2,7 @@
 #include <uart.h>
 #include <task.h>
 
-unsigned int next_task_id = 0;
+static unsigned int next_task_id = 0;
 task_t tasks[NUM_TASKS];
 
 void init_task(void) {

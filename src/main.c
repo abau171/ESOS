@@ -25,7 +25,10 @@ void handle_syscall(unsigned int syscall_id) {
 			schedule_next_task();
 		break;
 		case 0x1: /* launch */
-			launch_task((start_func_t*) cur_task->registers.r[0]);
+			cur_task->registers.r[0] = launch_task((start_func_t*) cur_task->registers.r[0]);
+		break;
+		case 0x2: /* get_tid */
+			cur_task->registers.r[0] = cur_tid;
 		break;
 		default:
 			uart_print(DEV_UART0, "unknown syscall\n");

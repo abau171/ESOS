@@ -16,3 +16,11 @@ launch:
 	pop {r7}
 	mov pc, lr
 
+.globl get_tid
+get_tid:
+	push {r7}
+	mov r7, #2
+	svc 0
+	pop {r7}
+	mov pc, lr
+

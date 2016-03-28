@@ -13,7 +13,10 @@ static void user1_f(void) {
 		a++;
 		if (a > 90) {
 			a = 65;
-			launch(&user2_f);
+			unsigned int launched_tid = launch(&user2_f);
+			uart_print(DEV_UART0, "f1 launched tid ");
+			uart_dprint(DEV_UART0, launched_tid);
+			uart_cprint(DEV_UART0, '\n');
 		}
 		uart_cprint(DEV_UART0, a);
 		uart_cprint(DEV_UART0, '\n');
@@ -22,6 +25,10 @@ static void user1_f(void) {
 }
 
 static void user2_f(void) {
+	unsigned int tid = get_tid();
+	uart_print(DEV_UART0, "f2 tid ");
+	uart_dprint(DEV_UART0, tid);
+	uart_cprint(DEV_UART0, '\n');
 	unsigned int a = 0;
 	while (1) {
 		uart_xprint(DEV_UART0, a);
