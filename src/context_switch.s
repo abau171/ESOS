@@ -9,6 +9,8 @@ software_interrupt_handler:
 	stmdb sp, {r0-lr}^
 	/* set the stack address to the last available address */
 	ldr sp, =0x07ffffff
+	/* move the syscall id to first argument */
+	mov r0, r7
 
 	/* handle the system call */
 	bl handle_syscall
@@ -49,10 +51,4 @@ activate_task:
 	ldmdb sp, {r0-lr}^
 	/* load user pc and cpsr */
 	rfeia sp
-
-.globl svc
-svc:
-	/* invoke a software interrupt, then return */
-	svc 0
-	mov pc, lr
 

@@ -5,7 +5,5 @@
 
 void activate_task();
 
-void svc();
-
 #endif
 

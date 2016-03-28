@@ -14,9 +14,18 @@ void kernel_init(void) {
 	schedule_next_task();
 }
 
-void handle_syscall(void) {
-	uart_print(DEV_UART0, "syscall!\n");
-	schedule_next_task();
+void handle_syscall(unsigned int syscall_id) {
+	uart_print(DEV_UART0, "syscall(");
+	uart_dprint(DEV_UART0, syscall_id);
+	uart_print(DEV_UART0, ")!\n");
+	switch (syscall_id) {
+		case 0x0:
+			schedule_next_task();
+		break;
+		default:
+			uart_print(DEV_UART0, "unknown syscall\n");
+		break;
+	}
 }
 
 void handle_interrupt(void) {

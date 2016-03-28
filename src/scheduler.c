@@ -1,3 +1,4 @@
+#include <syscall.h>
 #include <context_switch.h>
 #include <device_addresses.h>
 #include <uart.h>
@@ -24,6 +25,7 @@ static void user2_f(void) {
 		uart_xprint(DEV_UART0, a);
 		uart_cprint(DEV_UART0, '\n');
 		a++;
+		if (a % 8 == 0) yield();
 		for (int i = 0; i < 20000000; i++);
 	}
 }
