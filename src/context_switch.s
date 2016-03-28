@@ -22,6 +22,8 @@ software_interrupt_handler:
 	ldmdb sp, {r0-lr}^
 	rfeia sp
 
+PIC: .word 0x10140000
+
 .globl interrupt_handler
 interrupt_handler:
 	/* save user state (see software_interrupt_handler) */
@@ -30,6 +32,11 @@ interrupt_handler:
 	msr CPSR_c, #0xd3
 	stmdb sp, {r0-lr}^
 	ldr sp, =0x07ffffff
+	/* get the interrupt identifier */
+	ldr r0, PIC
+	ldr r0, [r0]
+	clz r0, r0
+	rsb r0, r0, #31
 
 	/* handle the interrupt */
 	bl handle_interrupt

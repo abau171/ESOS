@@ -8,10 +8,10 @@
 
 #define PIC ((volatile unsigned int*) 0x10140000)
 #define PIC_TIMER01 0x10
-#define VIC_INTENABLE 0x4
+#define PIC_INTENABLE 0x4
 
 void timer_loop(timer_address_t timer, unsigned int useconds) {
-	*(PIC + VIC_INTENABLE) = PIC_TIMER01;
+	*(PIC + PIC_INTENABLE) = PIC_TIMER01;
 	*timer = useconds;
 	*(timer + 0x2) = 0x80 | 0x40 | 0x20 | 0x02;
 }

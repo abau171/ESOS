@@ -28,10 +28,19 @@ void handle_syscall(unsigned int syscall_id) {
 	}
 }
 
-void handle_interrupt(void) {
-	uart_print(DEV_UART0, "interrupt!\n");
+void handle_interrupt(unsigned int interrupt_id) {
+	uart_print(DEV_UART0, "interrupt(");
+	uart_dprint(DEV_UART0, interrupt_id);
+	uart_print(DEV_UART0, ")!\n");
 	/* need to clear interrupt source if it is handled */
-	timer_clear(DEV_TIMER0);
-	schedule_next_task();
+	switch (interrupt_id) {
+		case 0x4:
+			timer_clear(DEV_TIMER0);
+			schedule_next_task();
+		break;
+		default:
+			uart_print(DEV_UART0, "unknown interrupt\n");
+		break;
+	}
 }
 
