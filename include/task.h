@@ -17,6 +17,8 @@ typedef struct {
 	unsigned int stack[TASK_STACK_SIZE];
 } task_t;
 
+typedef void start_func_t(void);
+
 extern task_t tasks[NUM_TASKS];
 
 void init_task(void);

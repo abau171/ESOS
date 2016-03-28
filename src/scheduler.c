@@ -5,11 +5,16 @@
 #include <task.h>
 #include <scheduler.h>
 
+static void user2_f(void);
+
 static void user1_f(void) {
 	char a = 64;
 	while (1) {
 		a++;
-		if (a > 90) a = 65;
+		if (a > 90) {
+			a = 65;
+			launch(&user2_f);
+		}
 		uart_cprint(DEV_UART0, a);
 		uart_cprint(DEV_UART0, '\n');
 		for (int i = 0; i < 100000000; i++);
@@ -22,7 +27,7 @@ static void user2_f(void) {
 		uart_xprint(DEV_UART0, a);
 		uart_cprint(DEV_UART0, '\n');
 		a++;
-		for (int i = 0; i < 20000000; i++);
+		for (int i = 0; i < 200000000; i++);
 	}
 }
 
@@ -33,8 +38,6 @@ unsigned int cur_tid = 0;
 
 void init_scheduler(void) {
 	launch_task(&user1_f);
-	launch_task(&user2_f);
-	launch_task(&user2_f);
 }
 
 void schedule_next_task(void) {

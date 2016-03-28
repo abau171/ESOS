@@ -11,7 +11,7 @@ void init_task(void) {
 	}
 }
 
-unsigned int launch_task(void (*start_func)(void)) {
+unsigned int launch_task(start_func_t* start_func) {
 	/* grab current task id, increment next task id */
 	unsigned int tid = next_task_id;
 	next_task_id++;
