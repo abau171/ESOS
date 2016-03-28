@@ -12,8 +12,8 @@ TARGET = kernel.img
 ELF_TARGET = kernel.elf
 LINKER_SCRIPT = kernel.ld
 
-S_SOURCES = $(wildcard $(SRC)/*.s)
-S_OBJECTS = $(patsubst $(SRC)/%.s, $(OBJ)/%.o, $(S_SOURCES))
+S_SOURCES = $(SRC)/bootstrap.s $(SRC)/context_switch.s $(SRC)/syscall.s
+S_OBJECTS = $(OBJ)/bootstrap.o $(OBJ)/context_switch.o $(OBJ)/syscall.o
 C_SOURCES = $(wildcard $(SRC)/*.c)
 C_OBJECTS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(C_SOURCES))
 ALL_OBJECTS = $(S_OBJECTS) $(C_OBJECTS)

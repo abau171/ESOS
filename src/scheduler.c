@@ -5,9 +5,6 @@
 #include <task.h>
 #include <scheduler.h>
 
-static task_t task1;
-static task_t task2;
-
 static void user1_f(void) {
 	char a = 64;
 	while (1) {
@@ -25,7 +22,6 @@ static void user2_f(void) {
 		uart_xprint(DEV_UART0, a);
 		uart_cprint(DEV_UART0, '\n');
 		a++;
-		if (a % 8 == 0) yield();
 		for (int i = 0; i < 20000000; i++);
 	}
 }
@@ -33,17 +29,19 @@ static void user2_f(void) {
 /* pointer to the next task that will be run */
 task_t* cur_task;
 
+unsigned int cur_tid = 0;
+
 void init_scheduler(void) {
-	init_task(&task1, &user1_f);
-	init_task(&task2, &user2_f);
+	launch_task(&user1_f);
+	launch_task(&user2_f);
+	launch_task(&user2_f);
 }
 
 void schedule_next_task(void) {
 	/* choose the next task to be run */
-	if (cur_task == &task1) {
-		cur_task = &task2;
-	} else {
-		cur_task = &task1;
-	}
+	do {
+		cur_tid = (cur_tid + 1) % NUM_TASKS;
+	} while (tasks[cur_tid].state != TASK_ALIVE);
+	cur_task = &tasks[cur_tid];
 }
 

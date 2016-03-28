@@ -7,6 +7,8 @@
 
 void kernel_init(void) {
 	uart_print(DEV_UART0, "ESOS reboot\n");
+	/* initialize the task list */
+	init_task();
 	/* initialize the scheduler so tasks can be created and managed */
 	init_scheduler();
 	/* start timer loop (ticks every 1 second) */
@@ -19,7 +21,7 @@ void handle_syscall(unsigned int syscall_id) {
 	uart_dprint(DEV_UART0, syscall_id);
 	uart_print(DEV_UART0, ")!\n");
 	switch (syscall_id) {
-		case 0x0:
+		case 0x0: /* yield */
 			schedule_next_task();
 		break;
 		default:

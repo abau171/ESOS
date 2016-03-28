@@ -1,8 +1,22 @@
+#include <device_addresses.h>
+#include <uart.h>
 #include <task.h>
 
-#define TASK_STACK_SIZE 256
+unsigned int next_task_id = 0;
+task_t tasks[NUM_TASKS];
 
-void init_task(task_t* task, void (*start_func)(void)) {
+void init_task(void) {
+	for (int i = 0; i < NUM_TASKS; i++) {
+		tasks[i].state = TASK_DEAD;
+	}
+}
+
+unsigned int launch_task(void (*start_func)(void)) {
+	/* grab current task id, increment next task id */
+	unsigned int tid = next_task_id;
+	next_task_id++;
+	/* find task */
+	task_t* task = &tasks[tid];
 	/* initialize all registers to zero */
 	for (unsigned int i = 0; i < 17; i++) {
 		task->registers.r[i] = 0;
@@ -13,5 +27,9 @@ void init_task(task_t* task, void (*start_func)(void)) {
 	task->registers.r[15] = (unsigned int) start_func;
 	/* set cpsr to user mode with no flags set */
 	task->registers.r[16] = 0x10;
+	/* set task state to alive */
+	task->state = TASK_ALIVE;
+	/* return tid */
+	return tid;
 }
 
