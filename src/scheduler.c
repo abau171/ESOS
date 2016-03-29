@@ -74,6 +74,7 @@ void schedule_next_task(void) {
 unsigned int scheduler_launch_task(start_func_t* start_func) {
 	unsigned int tid = launch_task(start_func);
 	run_queue_add_task(tid);
+	return tid;
 }
 
 void run_queue_add_task(unsigned int tid) {
