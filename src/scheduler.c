@@ -41,17 +41,49 @@ static void user2_f(void) {
 /* pointer to the next task that will be run */
 task_t* cur_task;
 
+/* tid of active thread */
 unsigned int cur_tid = 0;
 
+/* run queue : ring buffer of tids */
+unsigned int run_queue[NUM_TASKS];
+unsigned int run_queue_start_index = 0;
+unsigned int run_queue_end_index = 0;
+
+/* whether last task was the idle task */
+unsigned int cur_task_idle = 1;
+
 void init_scheduler(void) {
-	launch_task(&user1_f);
+	scheduler_launch_task(&user1_f);
 }
 
 void schedule_next_task(void) {
 	/* choose the next task to be run */
-	do {
-		cur_tid = (cur_tid + 1) % NUM_TASKS;
-	} while (tasks[cur_tid].state != TASK_ALIVE);
-	cur_task = &tasks[cur_tid];
+	if (!cur_task_idle) {
+		run_queue_add_task(cur_tid);
+	}
+	if (run_queue_start_index != run_queue_end_index) {
+		cur_tid = run_queue_read_task();
+		cur_task = &tasks[cur_tid];
+		cur_task_idle = 0;
+	} else {
+		// cur_task = /* idle task */
+		cur_task_idle = 1;
+	}
+}
+
+unsigned int scheduler_launch_task(start_func_t* start_func) {
+	unsigned int tid = launch_task(start_func);
+	run_queue_add_task(tid);
+}
+
+void run_queue_add_task(unsigned int tid) {
+	run_queue[run_queue_end_index] = tid;
+	run_queue_end_index = (run_queue_end_index + 1) % NUM_TASKS;
+}
+
+unsigned int run_queue_read_task() {
+	unsigned int tid = run_queue[run_queue_start_index];
+	run_queue_start_index = (run_queue_start_index + 1) % NUM_TASKS;
+	return tid;
 }
 
